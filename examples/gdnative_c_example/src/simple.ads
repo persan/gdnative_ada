@@ -3,43 +3,46 @@ with Interfaces.C;
 with GDNative.Thin; use GDNative.Thin;
 
 package Simple is
-
-  procedure godot_gdnative_init (p_options : access godot_gdnative_init_options)
-    with Export => True, Convention => C, External_Name => "godot_gdnative_init";
+   
+   procedure Godot_Gdnative_Init (P_Options : access Godot_Gdnative_Init_Options)
+     with Export => True, 
+     Convention => C,
+     External_Name => $Gdnative_Init;
   
-  procedure godot_gdnative_terminate (p_options : access godot_gdnative_terminate_options)
-    with Export => True, Convention => C, External_Name => "godot_gdnative_terminate";
+   procedure Godot_Gdnative_Terminate (P_Options : access Godot_Gdnative_Terminate_Options)
+     with Export => True,
+     Convention => C, 
+     External_Name => $Gdnative_Terminate;
 
-  procedure godot_nativescript_init (p_handle : Nativescript_Handle)
-    with Export => True, Convention => C, External_Name => "godot_nativescript_init";
+   procedure Godot_Nativescript_Init (P_Handle : Nativescript_Handle)
+     with Export => True,
+     Convention => C, 
+     External_Name => $Nativescript_Init;
 
--------
+   -------
 private
--------
+   -------
 
-  package Object is
+   package Object is
   
-    function simple_constructor (
-      p_instance    : System.Address;
-      p_method_data : System.Address)
-      return System.Address;
-    pragma Convention(C, simple_constructor);
+      function Simple_Constructor (P_Instance    : System.Address;
+                                   P_Method_Data : System.Address)
+                                   return System.Address;
+      pragma Convention (C, Simple_Constructor);
 
-    procedure simple_destructor (
-      p_instance    : System.Address;
-      p_method_data : System.Address;
-      p_user_data   : System.Address);
-    pragma Convention(C, simple_destructor);
+      procedure Simple_Destructor (P_Instance    : System.Address;
+                                   P_Method_Data : System.Address;
+                                   P_User_Data   : System.Address);
+      pragma Convention (C, Simple_Destructor);
     
-    function simple_get_data (
-      p_instance    : System.Address;
-      p_method_data : System.Address;
-      p_user_data   : System.Address;
-      p_num_args    : Interfaces.C.int;
-      p_args        : Godot_Instance_Method_Args_Ptrs.Pointer) -- godot_variant **
-      return godot_variant;
-    pragma Convention(C, simple_get_data);
+      function Simple_Get_Data (P_Instance    : System.Address;
+                                P_Method_Data : System.Address;
+                                P_User_Data   : System.Address;
+                                P_Num_Args    : Interfaces.C.int;
+                                P_Args        : Godot_Instance_Method_Args_Ptrs.Pointer) -- godot_variant **
+                                return Godot_Variant;
+      pragma Convention (C, Simple_Get_Data);
 
-  end;
+   end;
 
 end;

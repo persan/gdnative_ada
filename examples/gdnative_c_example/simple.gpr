@@ -1,11 +1,28 @@
-with "../../gdnative_ada.gpr";
 
-library project Simple is
-  for Library_Name use "simple";
-  for Library_Kind use "dynamic";
-  for Library_Interface use ("Simple");
-  for Library_Standalone use "encapsulated";
-  for Object_Dir   use "obj";
-  for Source_Dirs  use ("src");
-  for Library_Dir  use "lib";
+library project Simple extends  "../../gdnative_ada.gpr" is
+   for Create_Missing_Dirs use "True";
+   Prefix := "godot_";
+   Gdnative_Init := Prefix & "gdnative_init";
+   Gdnative_Terminate := Prefix & "gdnative_terminate";
+   Nativescript_Init := Prefix & "nativescript_init";
+
+   for Library_Name use "simple";
+   for Library_Kind use "dynamic";
+   Library_Interface := Library_Interface & ("Simple");
+
+   for Library_Interface use Library_Interface;
+   for Library_Standalone use "encapsulated";
+
+   for Object_Dir   use "obj";
+   for Source_Dirs  use ("src");
+   for Library_Dir  use "lib";
+
+   package Compiler is
+      for Default_Switches ("Ada") use Switch_Compiler &
+      ("-gnateD" & "Gdnative_Init=""" & Gdnative_Init & """",
+       "-gnateD" & "Gdnative_Terminate=""" & Gdnative_Terminate & """",
+       "-gnateD" & "Nativescript_Init=""" & Nativescript_Init & """"
+      );
+   end Compiler;
+
 end Simple;

@@ -20,4 +20,4 @@ package body GDNative is
     return Result;
   end;
 
-end; 
+end;
